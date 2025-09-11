@@ -3,9 +3,7 @@
 #include <string.h>
 
 int main(){
-    int result = 0;
     char comando[100];
-    int a = 10;
     while(1){
     printf("myterm>");
     scanf("%s", comando);
@@ -16,17 +14,25 @@ int main(){
         int num1;
         int num2;
         char operador;
-        scanf("%d", num1);
-        scanf("%d", num2);
+        scanf("%d", &num1);
+        scanf("%d", &num2);
         scanf("%s", operador);
         conta(num1, num2, operador);
     }else if(strcmp("agenda", comando)==0){
         char nome[100];
         char telefone[10];
+        printf("Você deseja cadastrar um novo contato ou listar a agenda?: \n");
+        printf("(cadastrar/listar)?: \n");
+        char AgComando[100];
+        scanf("%s", AgComando);
+        if(strcmp("cadastrar", AgComando)==0){
         scanf("%s", nome);
         scanf("%s", telefone);
         cadastrar_agenda(nome, telefone);
-    }else if(strcmp("exit", comando)==0){
+    }else if(strcmp("listar", AgComando)==0){
+        listar_agenda();
+    }
+    }else if(strcmp("sair", comando)==0){
         printf("Saindo \n");
         exit(0);
     }
@@ -61,12 +67,25 @@ void cadastrar_agenda(char nome[100], char telefone[10]){
         printf("ERRO!!!");
         exit(1);
     }
-    fprintf(ponteiro_agenda, "Nome:%s Telefone:%s", nome, telefone);
+    fprintf(ponteiro_agenda, "Nome:%s Telefone:%s\n", nome, telefone);
     fclose(ponteiro_agenda);
     printf("Contato Salvo!");
 }
 
+void listar_agenda(){
+    char linha[100];
+    FILE *ponteiro_agenda;
+    ponteiro_agenda = fopen("agenda.txt", "r");
+    if(ponteiro_agenda == NULL){
+        printf("ERRO!!!");
+        exit(1);
+    }
+    printf("Seus Contatos: \n");
+    while(fgets(linha, sizeof(linha), ponteiro_agenda)!= NULL){
+        printf("%s", linha);
+    }
 
+}
 
 
    
