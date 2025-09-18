@@ -9,6 +9,7 @@ public:
      void getdateils(){}
 
 };
+char *nome;
 
 int main(){
     Person p1;
